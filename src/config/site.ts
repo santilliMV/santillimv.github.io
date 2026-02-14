@@ -1,69 +1,68 @@
 // Site-wide configuration
 export const siteConfig = {
   // Site metadata
-  name: "Astro Blog",
-  title: "Astro Blog",
-  description: "A modern blog built with Astro",
+  name: "Santiago Muñoz Villate",
+  title: "Santiago Muñoz Villate",
+  description: "Portfolio and blog of Santiago Muñoz Villate",
   
   // Navigation
   navigation: {
-    home: "Home",
-    posts: "Posts",
-    contact: "Contact",
-    comments: "Comments",
+    home: "Principal",
+    posts: "Evidencias",
+    contact: "Contacto",
   },
   
   // Hero Section
   hero: {
-    prefix: "I am",
-    name: "Someone Name",
-    intro: "I am a web developer and blogger, passionate about sharing knowledge and building cool things with code.\nWelcome to my portfolio blog!",
-    avatar: "/image/20943608.jpeg",
+    prefix: "Soy",
+    name: "Santiago Muñoz Villate",
+    intro: "Estudiante de Ingeniería de sistemas. Apasionado por aprender y construir soluciones con código.",
+    avatar: "/image/WhatsApp%20Image%202026-02-13%20at%209.25.30%20PM.jpeg",
     buttons: {
-      viewPosts: "View Posts",
-      contactMe: "Contact Me",
+      viewPosts: "Ver evidencias",
+      contactMe: "Contactarme",
     },
     socialLinks: [
       { name: "Twitter", icon: "/svg/twitter.svg", url: "https://x.com/astrodotbuild" },
-      { name: "LinkedIn", icon: "/svg/linkedin.svg", url: "https://www.linkedin.com/company/astrodotbuild" },
-      { name: "Facebook", icon: "/svg/facebook.svg", url: "https://www.facebook.com/astrodotbuild" },
-      { name: "GitHub", icon: "/svg/github.svg", url: "https://github.com/tomcomtang/astro-cartoon-portfolio" },
+      { name: "LinkedIn", icon: "/svg/linkedin.svg", url: "https://www.linkedin.com" },
+      { name: "Facebook", icon: "/svg/facebook.svg", url: "https://www.facebook.com" },
+      { name: "GitHub", icon: "/svg/github.svg", url: "https://github.com/santilliMV" },
     ],
   },
   
   // About Section
   about: {
-    title: "About Me",
-    text: "Hi, I'm Someone, a passionate web developer and blogger. I love exploring new technologies and sharing knowledge with the community. On this blog, you'll find my thoughts on web development, tutorials, and project showcases. I hope my content can inspire others in their coding journey.",
+    title: "Sobre mí",
+    text: "Soy estudiante de la universidad El Bosque apasionado por la programación y la resolución de problemas, enfocado en fortalecer mis habilidades en desarrollo de software y algoritmos. Me caracterizo por el aprendizaje constante, la disciplina académica y el interés por crear soluciones tecnológicas eficientes.",
   },
   
   // Contact Page
   contact: {
     title: "Get In Touch",
-    subtitle: "I'm always open to discussing new projects, creative ideas, or opportunities to be part of your visions.",
+    subtitle: "Aca puedes ver mis formas de contacto, no dudes en escribirme!",
     info: {
       email: {
         label: "Email",
-        value: "tom@example.com",
-        link: "mailto:tom@example.com",
+        value: "santiagomunozv123@gmail.com",
+        link: "mailto:santiagomunozv123@gmail.com",
       },
       phone: {
-        label: "Phone",
-        value: "+1 (234) 567-890",
-        link: "tel:+1 (234) 567-890",
+        label: "Telefono",
+        value: "+57 3142980438",
+        link: "tel:+573142980438",
       },
       location: {
         label: "Location",
-        value: "San Francisco, CA",
+        value: "Bogota",
       },
     },
     followMe: {
       title: "Follow Me",
       links: [
-        { name: "Twitter", icon: "/svg/twitter.svg", url: "https://x.com/astrodotbuild" },
-        { name: "LinkedIn", icon: "/svg/linkedin.svg", url: "https://www.linkedin.com/company/astrodotbuild" },
-        { name: "Facebook", icon: "/svg/facebook.svg", url: "https://www.facebook.com/astrodotbuild" },
-        { name: "GitHub", icon: "/svg/github.svg", url: "https://github.com/tomcomtang/astro-cartoon-portfolio" },
+        { name: "Twitter", icon: "/svg/twitter.svg" },
+        { name: "LinkedIn", icon: "/svg/linkedin.svg" },
+        { name: "Facebook", icon: "/svg/facebook.svg" },
+        { name: "GitHub", icon: "/svg/github.svg" },
       ],
     },
     footerText: [
@@ -75,7 +74,7 @@ export const siteConfig = {
   
   // Footer
   footer: {
-    copyright: "© 2025 Someone. All rights reserved.",
+    copyright: "© 2026 Santiago Muñoz Villate. All rights reserved.",
     links: [
       { text: "Privacy Policy", url: "#" },
       { text: "Terms of Service", url: "#" },
@@ -89,26 +88,11 @@ export const siteConfig = {
   
   // Posts Page
   posts: {
-    title: "Blog Posts",
-    subtitle: "Explore our latest articles on web development, design, and technology",
-    searchPlaceholder: "Search posts...",
+    title: "Publicaciones",
+    subtitle: "Explora los artículos y trabajos publicados",
+    searchPlaceholder: "Buscar publicaciones...",
   },
   
-  // Comments Page
-  comments: {
-    title: "Comments & Discussion",
-    subtitle: "Share your thoughts, questions, or suggestions here. Let's connect and discuss!",
-    guidelines: {
-      title: "Community Guidelines",
-      items: [
-        "Be respectful and constructive in your comments",
-        "No spam, self-promotion, or advertising allowed",
-        "No personal attacks, hate speech, or harassment",
-        "Stay on topic and keep discussions relevant",
-        "No inappropriate, offensive, or illegal content",
-        "Use clear, friendly, and inclusive language",
-      ],
-    },
-  },
 };
+
 

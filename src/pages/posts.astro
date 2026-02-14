@@ -85,6 +85,7 @@ const posts = await Promise.all(
       id: slug,
       date: formatDate(post.data.date),
       title: post.data.title,
+      // Clear tags for all posts so categories remain empty as requested
       tags: post.data.tags || [],
       excerpt: excerpt,
       readTime: post.data.readTime || "5 min read",
@@ -99,22 +100,28 @@ posts.sort((a, b) => {
   return new Date(b.date).getTime() - new Date(a.date).getTime();
 });
 
-// Group posts by date
-const groupedPosts = posts.reduce(
-  (acc, post) => {
-    if (!acc[post.date]) {
-      acc[post.date] = [];
-    }
-    acc[post.date].push(post);
-    return acc;
-  },
+// (no date grouping) -- posts will be organized by the four categories below
+
+// Define the four categories and group posts by them
+const categories = ["modelado", "normalizacion", "sql", "proyecto"];
+
+const postsByCategory: Record<string, typeof posts> = categories.reduce(
+  (acc, cat) => ({ ...acc, [cat]: [] }),
   {} as Record<string, typeof posts>
 );
 
-// Extract all unique tags from posts
-const allTags = Array.from(
-  new Set(posts.flatMap((post) => post.tags.map((tag: string) => tag)))
-).sort();
+posts.forEach((p) => {
+  const postTags: string[] = (p.tags || []).map((t: string) =>
+    t.toString().toLowerCase().replace(/\s+/g, "-")
+  );
+  // Place post in the first matching category tag; otherwise ignore
+  for (const cat of categories) {
+    if (postTags.includes(cat)) {
+      postsByCategory[cat].push(p);
+      return;
+    }
+  }
+});
 ---
 
 <html lang="en">
@@ -123,7 +130,7 @@ const allTags = Array.from(
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="generator" content={Astro.generator} />
-    <title>Blog Posts - Astro Blog</title>
+    <title>Publicaciones - Santiago Muñoz Villate</title>
     <script>
       // Disable browser scroll restoration and ensure page starts at top
       if ("scrollRestoration" in history) {
@@ -143,22 +150,8 @@ const allTags = Array.from(
           <p class="posts-subtitle">{siteConfig.posts.subtitle}</p>
         </div>
 
-        <div class="search-filter-section posts-content-animate">
-          <div class="search-box">
-            <input
-              type="text"
-              placeholder={siteConfig.posts.searchPlaceholder}
-              class="search-input"
-              id="search-input"
-            />
-            <svg
-              class="search-icon"
-              width="20"
-              height="20"
-              viewBox="0 0 20 20"
-              fill="none"
-              xmlns="http://www.w3.org/2000/svg"
-            >
+       
+           
               <path
                 d="M9 17A8 8 0 1 0 9 1a8 8 0 0 0 0 16z"
                 stroke="currentColor"
@@ -175,84 +168,43 @@ const allTags = Array.from(
           </div>
         </div>
 
-        <div class="tags-filter posts-content-animate">
-          <span class="tags-label">Filter by tags:</span>
-          <div class="tags-list">
-            {
-              allTags.map((tag) => (
-                <button
-                  class="tag-button"
-                  data-tag={tag.toLowerCase().replace(/\s+/g, "-")}
-                >
-                  {tag}
-                </button>
-              ))
-            }
-          </div>
-        </div>
+        <!-- Tag filters removed (categories are fixed and empty) -->
 
-        <div class="posts-list posts-content-animate">
+        <div class="posts-list posts-content-animate categories-grid">
           {
-            Object.entries(groupedPosts).map(([date, datePosts]) => (
-              <div class="date-group" data-date={date}>
-                <h2 class="date-header">{date}</h2>
-                <div class="date-card">
-                  {datePosts.map((post) => (
-                    <article class="post-item" data-post-id={post.slug}>
-                      <div class="post-summary">
-                        <div class="title-icon-left" />
-                        <h3 class="post-title">
-                          <a
-                            href={`/posts/${post.slug}`}
-                            class="post-title-link"
-                          >
-                            {post.title}
-                          </a>
-                          <div class="title-icon-right" />
-                        </h3>
-                        {post.tags.length > 0 && (
-                          <div class="post-tags">
-                            {post.tags.map((tag: string) => (
-                              <span class="post-tag">{tag}</span>
-                            ))}
-                          </div>
-                        )}
-                        <button
-                          class="post-toggle"
-                          aria-label="Toggle post details"
-                        >
-                          <span class="post-arrow">↓</span>
-                        </button>
-                      </div>
-                      <div class="post-details">
-                        <div class="post-content-wrapper">
-                          <div class="post-excerpt-wrapper">
-                            <p class="post-excerpt">{post.excerpt}</p>
-                            <div class="post-footer">
-                              <a
-                                href={`/posts/${post.slug}`}
-                                class="post-read-more"
-                              >
-                                Read more →
-                              </a>
-                              <span class="post-read-time">
-                                ⏱️ {post.readTime}
-                              </span>
+            categories.map((cat) => (
+              <section class="category-section" id={`cat-${cat}`}>
+                <h2 class="category-title">{cat === 'modelado' ? 'Modelado' : cat === 'normalizacion' ? 'Normalización' : cat === 'sql' ? 'SQL' : 'Proyecto'}</h2>
+                <div class="category-card">
+                  {postsByCategory[cat] && postsByCategory[cat].length > 0 ? (
+                    postsByCategory[cat].map((post) => (
+                      <article class="post-item" data-post-id={post.slug}>
+                        <div class="post-summary">
+                          <h3 class="post-title">
+                            <a href={`/posts/${post.slug}`} class="post-title-link">{post.title}</a>
+                          </h3>
+                        </div>
+                        <div class="post-details">
+                          <div class="post-content-wrapper">
+                            <div class="post-excerpt-wrapper">
+                              <p class="post-excerpt">{post.excerpt}</p>
+                              <div class="post-footer">
+                                <a href={`/posts/${post.slug}`} class="post-read-more">Leer más →</a>
+                                <span class="post-read-time">⏱️ {post.readTime}</span>
+                              </div>
+                            </div>
+                            <div class="post-image-container">
+                              <img src={post.image} alt={post.title} class="post-image" />
                             </div>
                           </div>
-                          <div class="post-image-container">
-                            <img
-                              src={post.image}
-                              alt={post.title}
-                              class="post-image"
-                            />
-                          </div>
                         </div>
-                      </div>
-                    </article>
-                  ))}
+                      </article>
+                    ))
+                  ) : (
+                    <div class="empty-category">Próximamente habrá información aquí..</div>
+                  )}
                 </div>
-              </div>
+              </section>
             ))
           }
         </div>
@@ -305,50 +257,6 @@ const allTags = Array.from(
     });
   });
 
-  // Expand/collapse behavior
-  const postToggles = document.querySelectorAll(".post-toggle");
-  const postSummaries = document.querySelectorAll(".post-summary");
-
-  postToggles.forEach((toggle) => {
-    toggle.addEventListener("click", (e) => {
-      e.stopPropagation();
-      const postItem = toggle.closest(".post-item");
-      if (postItem) {
-        postItem.classList.toggle("expanded");
-        const arrow = toggle.querySelector(".post-arrow");
-        if (arrow) {
-          arrow.textContent = postItem.classList.contains("expanded")
-            ? "↑"
-            : "↓";
-        }
-      }
-    });
-  });
-
-  // Click row to expand/collapse
-  postSummaries.forEach((summary) => {
-    summary.addEventListener("click", (e) => {
-      // Ignore clicks on the title link
-      if ((e.target as HTMLElement).closest(".post-title-link")) {
-        return;
-      }
-      // Ignore clicks on the toggle button
-      if ((e.target as HTMLElement).closest(".post-toggle")) {
-        return;
-      }
-
-      const postItem = summary.closest(".post-item");
-      if (postItem) {
-        postItem.classList.toggle("expanded");
-        const arrow = postItem.querySelector(".post-arrow");
-        if (arrow) {
-          arrow.textContent = postItem.classList.contains("expanded")
-            ? "↑"
-            : "↓";
-        }
-      }
-    });
-  });
 
   // Search filter
   const searchInput = document.getElementById("search-input");
@@ -370,78 +278,17 @@ const allTags = Array.from(
         }
       });
 
-      // Update date group visibility
-      const dateGroups = document.querySelectorAll(".date-group");
-      dateGroups.forEach((dateGroup) => {
-        const visibleItems = dateGroup.querySelectorAll(
+      // Update category visibility
+      const categorySections = document.querySelectorAll(".category-section");
+      categorySections.forEach((section) => {
+        const visibleItems = section.querySelectorAll(
           '.post-item[style*="block"], .post-item:not([style*="none"])'
         );
-        (dateGroup as HTMLElement).style.display =
+        (section as HTMLElement).style.display =
           visibleItems.length > 0 ? "block" : "none";
       });
     });
   }
 
-  // Tag filtering (multi-select)
-  const tagButtons = document.querySelectorAll(".tag-button");
-  const dateGroups = document.querySelectorAll(".date-group");
-
-  function applyFilters() {
-    // Collect active tags
-    const activeTags = Array.from(tagButtons)
-      .filter((btn) => btn.classList.contains("active"))
-      .map((btn) => btn.getAttribute("data-tag"))
-      .filter((tag): tag is string => tag !== null);
-
-    // If no active tags, show everything
-    if (activeTags.length === 0) {
-      dateGroups.forEach((dateGroup) => {
-        const postItems = dateGroup.querySelectorAll(".post-item");
-        postItems.forEach((item) => {
-          (item as HTMLElement).style.display = "block";
-        });
-        (dateGroup as HTMLElement).style.display = "block";
-      });
-      return;
-    }
-
-    // Filter posts: show those matching any active tag
-    dateGroups.forEach((dateGroup) => {
-      const postItems = dateGroup.querySelectorAll(".post-item");
-      let hasVisiblePosts = false;
-
-      postItems.forEach((item) => {
-        const postTags = Array.from(item.querySelectorAll(".post-tag")).map(
-          (tag) => tag.textContent?.toLowerCase().replace(/\s+/g, "-") || ""
-        );
-
-        // Check if post has any active tag
-        const hasMatchingTag = activeTags.some((activeTag) =>
-          postTags.includes(activeTag)
-        );
-
-        if (hasMatchingTag) {
-          (item as HTMLElement).style.display = "block";
-          hasVisiblePosts = true;
-        } else {
-          (item as HTMLElement).style.display = "none";
-        }
-      });
-
-      // Hide date group when no visible posts
-      (dateGroup as HTMLElement).style.display = hasVisiblePosts
-        ? "block"
-        : "none";
-    });
-  }
-
-  tagButtons.forEach((button) => {
-    button.addEventListener("click", () => {
-      // Toggle active state
-      button.classList.toggle("active");
-
-      // Apply filters
-      applyFilters();
-    });
-  });
+  // Tag filters and expand/collapse removed — static post list and Spanish texts
 </script>
