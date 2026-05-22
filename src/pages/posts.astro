@@ -102,8 +102,14 @@ posts.sort((a, b) => {
 
 // (no date grouping) -- posts will be organized by the four categories below
 
-// Define the four categories and group posts by them
-const categories = ["modelado", "normalizacion", "sql", "proyecto"];
+// Define the categories and group posts by them
+const categories = [
+  "modelado",
+  "normalizacion",
+  "sql",
+  "algebra-relacional",
+  "proyecto",
+];
 
 const postsByCategory: Record<string, typeof posts> = categories.reduce(
   (acc, cat) => ({ ...acc, [cat]: [] }),
@@ -174,10 +180,9 @@ posts.forEach((p) => {
           {
             categories.map((cat) => (
               <section class="category-section" id={`cat-${cat}`}>
-                <h2 class="category-title">{cat === 'modelado' ? 'Modelado' : cat === 'normalizacion' ? 'Normalización' : cat === 'sql' ? 'SQL' : 'Proyecto'}</h2>
-                
-                {cat === 'modelado' ? (
-                  // Galería bonita para Modelado
+                <h2 class="category-title">{cat === 'modelado' ? 'Modelado' : cat === 'normalizacion' ? 'Normalización' : cat === 'sql' ? 'SQL' : cat === 'algebra-relacional' ? 'Álgebra Relacional' : 'Proyecto'}</h2>
+                {cat === 'modelado' || cat === 'normalizacion' || cat === 'algebra-relacional' || cat === 'sql' || cat === 'proyecto' ? (
+                  // Galería bonita para Modelado, Normalización, Álgebra Relacional, SQL y Proyecto
                   <div class="gallery-grid">
                     {postsByCategory[cat] && postsByCategory[cat].length > 0 ? (
                       postsByCategory[cat].map((post) => (

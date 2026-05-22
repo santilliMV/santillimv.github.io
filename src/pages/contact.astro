@@ -74,17 +74,7 @@ import { siteConfig } from "../config/site";
             </div>
           </div>
 
-          <!-- Follow Me Card -->
-          <div class="contact-card contact-card-animate">
-            <h3 class="contact-card-subtitle">{siteConfig.contact.followMe.title}</h3>
-            <div class="social-icons-list">
-              {siteConfig.contact.followMe.links.map((social) => (
-                <a href={social.url} target="_blank" rel="noopener noreferrer" class="social-icon-link" title={social.name.toLowerCase()}>
-                  <img src={social.icon} alt={`${social.name} icon`} />
-                </a>
-              ))}
-            </div>
-          </div>
+          
         </div>
 
         <div class="contact-footer-text comments-content-animate">

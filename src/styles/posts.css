@@ -285,15 +285,15 @@
 }
 
 .post-details {
-  max-height: 0;
-  overflow: hidden;
-  transition: max-height 0.3s ease, margin-top 0.3s ease, opacity 0.3s ease;
-  margin-top: 0;
-  opacity: 0;
+  max-height: none;
+  overflow: visible;
+  transition: none;
+  margin-top: 1.5rem;
+  opacity: 1;
 }
 
 .post-item.expanded .post-details {
-  max-height: 2000px;
+  max-height: none;
   margin-top: 1.5rem;
   opacity: 1;
 }
@@ -436,10 +436,13 @@
   grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 24px;
   padding: 20px 0;
+  justify-content: center;
 }
 
 .gallery-item {
   list-style: none;
+  max-width: 360px;
+  width: 100%;
 }
 
 .gallery-link {

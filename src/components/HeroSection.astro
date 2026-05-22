@@ -23,13 +23,6 @@ import { siteConfig } from "../config/site";
     </div>
     <div class="hero-right-col">
       <img src={siteConfig.hero.avatar} alt="avatar" class="hero-avatar hero-avatar-animate" />
-      <div class="social-list">
-        {siteConfig.hero.socialLinks.map((social) => (
-          <a href={social.url} class="social-icon-btn social-icon-animate" aria-label={social.name}>
-            <img src={social.icon} alt={social.name.toLowerCase()} />
-          </a>
-        ))}
-      </div>
     </div>
   </div>
 </section>
@@ -60,14 +53,6 @@ import { siteConfig } from "../config/site";
         heroAvatar.classList.add('visible');
       });
     }
-
-    // Trigger social icons animations
-    const socialIcons = document.querySelectorAll('.social-icon-animate');
-    socialIcons.forEach((icon) => {
-      requestAnimationFrame(() => {
-        icon.classList.add('visible');
-      });
-    });
   });
 </script>
 

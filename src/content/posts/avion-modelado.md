@@ -9,7 +9,7 @@ image: "/image/Avion.png"
 
 # Modelado de Avión
 
-Este es un ejemplo de modelado entidad-relación para un sistema de gestión de aviones.
+Este es un modelado entidad-relación para un sistema de gestión de aviones.
 
 ## Componentes Principales
 

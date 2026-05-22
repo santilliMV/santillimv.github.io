@@ -97,28 +97,16 @@ if (
         <div class="post-header-card post-header-animate">
           <h1 class="post-detail-title">{post.data.title}</h1>
           {
-            post.data.tags && post.data.tags.length > 0 && (
-              <div class="post-detail-tags">
-                {post.data.tags.map((tag: string) => (
-                  <span class="post-detail-tag">{tag}</span>
-                ))}
-              </div>
+            post.data.image && (
+              <img
+                src={post.data.image}
+                alt={post.data.title}
+                class="post-cover-image"
+              />
             )
           }
           <div class="post-detail-meta">
             <a href="/posts" class="post-back-button"> ← Back to Posts </a>
-            <div class="post-detail-meta-info">
-              <img
-                src="/image/20943608.jpeg"
-                alt={post.data.author || "Someone"}
-                class="post-detail-avatar"
-              />
-              <span class="post-detail-author"
-                >{post.data.author || "Someone"}</span
-              >
-              <span class="post-detail-date">{post.data.date}</span>
-              <span class="post-detail-read-time">{post.data.readTime}</span>
-            </div>
           </div>
         </div>
 

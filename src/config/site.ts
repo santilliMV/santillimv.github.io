@@ -38,7 +38,7 @@ export const siteConfig = {
   
   // Contact Page
   contact: {
-    title: "Get In Touch",
+    title: "Formas de contacto",
     subtitle: "Aca puedes ver mis formas de contacto, no dudes en escribirme!",
     info: {
       email: {
